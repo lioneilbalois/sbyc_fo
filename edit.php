@@ -43,4 +43,69 @@
 		}
 		mysqli_close($conn);
 	}
+
+	if(isset($_POST['editckBtn'])){
+		
+		$id = $_GET['id'];
+		$check_name = $_POST['name'];
+		$check_pr = $_POST['pr'];
+		$check_or = $_POST['or'];
+		$check_particular = $_POST['particular'];
+		$check_amount = $_POST['amount'];
+		$check_cashier = $_POST['cashier'];
+		$check_remarks = $_POST['remarks'];
+		$check_date = $_POST['date'];
+
+		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
+		$query = "UPDATE `check_trans` SET `name`='$check_name',`pr_num`='$check_pr',`or_num`='$check_or',`particular`='$check_particular',`amount`='$check_amount',`cashier`='$check_cashier',`remarks`='$check_remarks' WHERE `id` = $id";
+		
+		$result = mysqli_query($conn, $query);
+		if($result){
+			header('location: sbyc_dailytransaction.php?now=true');
+		}
+		mysqli_close($conn);
+	}
+
+	if(isset($_POST['editccBtn'])){
+		
+		$id = $_GET['id'];
+		$credit_name = $_POST['name'];
+		$credit_pr = $_POST['pr'];
+		$credit_or = $_POST['or'];
+		$credit_particular = $_POST['particular'];
+		$credit_amount = $_POST['amount'];
+		$credit_cashier = $_POST['cashier'];
+		$credit_remarks = $_POST['remarks'];
+		$credit_date = $_POST['date'];
+
+		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
+		$query = "UPDATE `credit_trans` SET `name`='$credit_name',`pr_num`='$credit_pr',`or_num`='$credit_or',`particular`='$credit_particular',`amount`='$credit_amount',`cashier`='$credit_cashier',`remarks`='$credit_remarks' WHERE `id` = $id";
+		
+		$result = mysqli_query($conn, $query);
+		if($result){
+			header('location: sbyc_dailytransaction.php?now=true');
+		}
+		mysqli_close($conn);
+	}
+
+	if(isset($_POST['editprBtn'])){
+		
+		$id = $_GET['id'];
+		$bill_name = $_POST['name'];
+		$bill_invoice = $_POST['invoice_no'];
+		$bill_particular = $_POST['particular'];
+		$bill_amount = $_POST['amount'];
+		$bill_receive = $_POST['received_by'];
+		$bill_remarks = $_POST['remarks'];
+		$bill_date = $_POST['date'];
+
+		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
+		$query = "UPDATE `bill_trans` SET `name`='$bill_name',`invoice_no`='$bill_invoice',`particular`='$bill_particular',`amount`='$bill_amount',`received_by`='$bill_receive',`remarks`='$bill_remarks' WHERE `id` = $id";
+		
+		$result = mysqli_query($conn, $query);
+		if($result){
+			header('location: sbyc_dailytransaction.php?now=true');
+		}
+		mysqli_close($conn);
+	}
 ?>
