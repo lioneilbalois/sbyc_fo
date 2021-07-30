@@ -155,7 +155,7 @@
 		$id = $_GET['id'];
 		$bill_date_rec = date("Y-m-d");
 		$bill_name = $_POST['name'];
-		$bill_invoice_no = $_POST['invoice_no'];
+		$bill_invoice_no = $_POST['invoice'];
 		$bill_particular = $_POST['particular'];
 		$bill_amount = $_POST['amount'];
 		$bill_receive = $_POST['received_by'];
