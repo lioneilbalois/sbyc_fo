@@ -7,7 +7,7 @@
 	$query = mysqli_query ($conn, $sql);
 	
 	if ($query){
-		header ('location: sbyc_dailytransaction.php?now=true');
+		header ('location: sbyc_dailytransaction.php');
 	}
 	mysqli_close($conn);
 ?>

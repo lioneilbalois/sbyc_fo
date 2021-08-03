@@ -3,21 +3,6 @@
 	$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 	$sel_date = date("Y-m-d");
 
-	// apply sorted date, this is the main variable for all table and sorts
-	if($_GET['now'] != 'true'){
-		$sel_date = $_GET['date_sort'];
-	}
-	
-	// to sum amounts per table @ bottom of the page
-	function summary($table){
-		$getDate = $GLOBALS['sel_date'];
-		$sum_q = "SELECT SUM(`amount`) FROM `$table` WHERE `date_recorded` = '$getDate';"; 
-		$do_q = mysqli_query($GLOBALS['conn'], $sum_q);
-		
-		$summ_row = mysqli_fetch_array($do_q);
-		if(mysqli_num_rows($do_q)) echo ($summ_row['0']);
-		if ($summ_row['0'] == "") echo "-";
-	}
 ?>
 
 <!doctype html>
@@ -25,14 +10,49 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<<<<<<< Updated upstream
     <link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/styles.css">
+=======
+>>>>>>> Stashed changes
     <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js" ></script>
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="jquery-ui/jquery-ui.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/script.js"></script>
+<<<<<<< Updated upstream
 	
+=======
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.min.css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.structure.css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.theme.css">
 
-    <title>Front Office</title>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<script>
+		$( function() {
+			$( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+		} );
+  	</script>
+
+	<style>
+		body{
+			background-color: #F7FBFC;
+		}
+		thead{
+			background-color: #548CA8;
+		}
+		th{
+			color:#DEFCFC;
+		}
+	</style>
+>>>>>>> Stashed changes
+
+    <title>Front Office | Daily Transaction</title>
 	<link rel="icon" href="img/sbyc.png">
 	</head>
 	<body>
@@ -50,7 +70,7 @@
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" href="sbyc_dailytransaction.php?now=true" style="color:white; text-decoration: none;"><h4>Daily Transaction</h4></a>
+					<a class="nav-link" href="sbyc_dailytransaction.php" style="color:white; text-decoration: none;"><h4>Daily Transaction</h4></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#" style="color:white; text-decoration: none;">Link</a>
@@ -66,14 +86,21 @@
 	  <div class="container-fluid mt-3">
 		<div class="row">
 			<div class="col-md-12">
-				<div style="float:right"><h3> Date: <input type="date" value="<?php echo $sel_date; ?>" id="date_selector"> </h3></div> <br> <br> <hr>
+
+					<div style="float:right">
+						<h3>
+							 Date: <input type="text" id="datepicker"> 
+							<input type="submit" class="btn btn-info" name="sel_date_submit" id="sel_date_submit">
+						</h3>
+					</div> <br> <br> <hr>
+				
 				<h3>Cash (CA) Transaction <button type="button" class="btn btn-primary" style="float:right;" data-backdrop="static" data-toggle="modal" data-target="#addcaModal">Add</button></h3>
 				<div class="modal fade" id="addcaModal">
 				  <div class="modal-dialog">
 					<div class="modal-content">
 
 					  <div class="modal-header bg-primary ft-white">
-						<h4 class="modal-title">Add Cash Transaction Entry</h4>
+						<h4 class="modal-title" style="color:white;">Add Cash Transaction Entry</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					  </div>
 
@@ -124,7 +151,7 @@
 							<th>Cashier</th>
 							<th>Remarks</th>
 							<th>BCS Date/By</th>
-							<th></th>
+							<th width="10%"></th>
 						
 						<tr>
 					</thead>
@@ -209,7 +236,7 @@
 
 										  <!-- Modal Header -->
 										<div class="modal-header bg-danger ft-white">
-											<h4 class="modal-title">Delete Cash Transaction Entry </h4>
+											<h4 class="modal-title" style="color:white;">Delete Cash Transaction Entry </h4>
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 
@@ -264,7 +291,7 @@
 					<div class="modal-content">
 
 					  <div class="modal-header bg-primary ft-white">
-						<h4 class="modal-title">Add Deposit Slip Transaction Entry</h4>
+						<h4 class="modal-title"  style="color:white;">Add Deposit Slip Transaction Entry</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					  </div>
 	
@@ -315,7 +342,7 @@
 							<th>Cashier</th>
 							<th>Remarks</th>
 							<th>BCS Date/By</th>
-							<th></th>
+							<th width="10%"></th>
 						
 						<tr>
 					</thead>
@@ -398,7 +425,7 @@
 									<div class="modal-content">
 
 										<div class="modal-header bg-danger ft-white">
-											<h4 class="modal-title">Delete Cash Transaction Entry </h4>
+											<h4 class="modal-title" style="color:white;">Delete Cash Transaction Entry </h4>
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 
@@ -452,7 +479,7 @@
 					<div class="modal-content">
 
 					  <div class="modal-header bg-primary ft-white">
-						<h4 class="modal-title">Add Check Transaction Entry</h4>
+						<h4 class="modal-title" style="color:white;">Add Check Transaction Entry</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					  </div>
 
@@ -503,7 +530,7 @@
 							<th>Cashier</th>
 							<th>Remarks</th>
 							<th>BCS Date/By</th>
-							<th></th>
+							<th width="10%"></th>
 						
 						<tr>
 					</thead>
@@ -588,7 +615,7 @@
 
 										  <!-- Modal Header -->
 										<div class="modal-header bg-danger ft-white">
-											<h4 class="modal-title">Delete Check Transaction Entry </h4>
+											<h4 class="modal-title" style="color:white;">Delete Check Transaction Entry </h4>
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 
@@ -643,7 +670,7 @@
 				<div class="modal-content">
 
 					<div class="modal-header bg-primary ft-white">
-					<h4 class="modal-title">Add Credit Card Transaction Entry</h4>
+					<h4 class="modal-title" style="color:white;">Add Credit Card Transaction Entry</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -694,7 +721,7 @@
 						<th>Cashier</th>
 						<th>Remarks</th>
 						<th>BCS Date/By</th>
-						<th></th>
+						<th width="10%"></th>
 					
 					<tr>
 				</thead>
@@ -779,7 +806,7 @@
 
 										<!-- Modal Header -->
 									<div class="modal-header bg-danger ft-white">
-										<h4 class="modal-title">Delete Credit Card Transaction Entry </h4>
+										<h4 class="modal-title" style="color:white;">Delete Credit Card Transaction Entry </h4>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
 
@@ -834,7 +861,7 @@
 				<div class="modal-content">
 
 					<div class="modal-header bg-primary ft-white">
-					<h4 class="modal-title">Add PR Transaction Entry</h4>
+					<h4 class="modal-title" style="color:white;">Add PR Transaction Entry</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -885,7 +912,7 @@
 						<th>Cashier</th>
 						<th>Remarks</th>
 						<th>BCS Date/By</th>
-						<th></th>
+						<th width="10%"></th>
 					
 					<tr>
 				</thead>
@@ -970,7 +997,7 @@
 
 										<!-- Modal Header -->
 									<div class="modal-header bg-danger ft-white">
-										<h4 class="modal-title">Delete PR Transaction Entry </h4>
+										<h4 class="modal-title" style="color:white;">Delete PR Transaction Entry </h4>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
 
@@ -1025,13 +1052,14 @@
 				<div class="modal-content">
 
 					<div class="modal-header bg-primary ft-white">
-					<h4 class="modal-title">Add Send Bill Transaction Entry</h4>
+					<h4 class="modal-title" style="color:white;">Add Send Bill Transaction Entry</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
 					<div class="modal-body">
 					<form action="add.php" method="POST">
 						<label for="name">Name:</label>
+<<<<<<< Updated upstream
 						<input type="text" id="name" name="name" placeholder="Input Name" class="form-control">
 						<label for="invoice">Invoice No:</label>
 						<input type="text" id="invoice" name="invoice" placeholder="Input Invoice No." class="form-control"> 
@@ -1041,6 +1069,17 @@
 						<input type="text" id="amount_bill" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_bill').value))"> 
 						<label for="cashier">Received By:</label>
 						<input type="text" id="received_by" name="received_by" placeholder="Received By:" class="form-control"> 
+=======
+						<input type="text" name="name" placeholder="Input Name" class="form-control">
+						<label for="invoice">PR:</label>
+						<input type="text" name="invoice" placeholder="Input Invoice No." class="form-control"> 
+						<label for="particular">Particular:</label>
+						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
+						<label for="amount">Amount:</label>
+						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
+						<label for="receive">Received By:</label>
+						<input type="text" id="receive" name="receive" placeholder="Received By:" class="form-control"> 
+>>>>>>> Stashed changes
 						<label for="remarks">Remarks:</label>
 						<input type="text" id="remarks" name="remarks" placeholder="Input Remarks" class="form-control"> 
 						<label for="date">BCS Date / By:</label>
@@ -1055,7 +1094,7 @@
 				</div>
 				</div>
 			</div>
-			<table class="table table-bordered ">
+			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -1065,7 +1104,7 @@
 						<th>Received By</th>
 						<th>Remarks</th>
 						<th>BCS Date/By</th>
-						<th></th>
+						<th width="10%"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -1109,11 +1148,19 @@
 												<label for="invoice">Invoice No.:</label>
 												<input type="text" id="invoice" name="invoice" placeholder="Input Invoice No." class="form-control" value="<?php echo $row['invoice_no'];?>"> 
 												<label for="particular">Particular:</label>
+<<<<<<< Updated upstream
 												<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 												<label for="amount">Amount:</label>
 												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
 												<label for="received_by">Received by:</label>
 												<input type="text" id="received_by" name="received_by" placeholder="Received By" class="form-control" value="<?php echo $row['received_by'];?>">
+=======
+												<input type="text" name="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+												<label for="amount">Amount:</label>
+												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
+												<label for="receive">Received by:</label>
+												<input type="text"  id="receive" name="receive" placeholder="Received By" class="form-control" value="<?php echo $row['received_by'];?>">
+>>>>>>> Stashed changes
 												<label for="remarks">Remarks:</label>
 												<input type="text" id="remarks" name="remarks" placeholder="Input Remarks" class="form-control" value="<?php echo $row['remarks'];?>"> 
 												<label for="date">BCS Date / By:</label>
@@ -1124,8 +1171,9 @@
 										<div class="modal-footer">
 											<button type="button" class="btn" data-dismiss="modal">Cancel</button>
 											<input type="submit" class="btn btn-primary" value="Save" name="editbillBtn" id="editbillBtn">
-										</div>
 											</form>
+										</div>
+											
 									</div>
 								</div>
 							</div>
@@ -1138,7 +1186,7 @@
 
 										<!-- Modal Header -->
 									<div class="modal-header bg-danger ft-white">
-										<h4 class="modal-title">Delete Send Bill Transaction Entry </h4>
+										<h4 class="modal-title" style="color:white;">Delete Send Bill Transaction Entry </h4>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
 
@@ -1200,27 +1248,27 @@
 					<tbody>
 						<tr>
 							<td><h6>Cash Transaction (CA)</h6></td>
-							<td><?php summary('cash_trans'); ?></td>
+							<td><?php// summary('cash_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Depslip Transaction (DPSLP)</h6></td>
-							<td><?php summary('depslip_trans'); ?></td>
+							<td><?php// summary('depslip_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Check Transaction (CK)</h6></td>
-							<td><?php summary('check_trans'); ?></td>
+							<td><?php// summary('check_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Credit Card Transaction (CC)</h6></td>
-							<td><?php summary('credit_trans'); ?></td>
+							<td><?php// summary('credit_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Provisional Receipt (PR)</h6></td>
-							<td><?php summary('pr_trans'); ?></td>
+							<td><?php// summary('pr_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Send Bill</h6></td>
-							<td><?php summary('bill_trans'); ?></td>
+							<td><?php// summary('bill_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>TOTAL TRANSACTIONS</h6></td>

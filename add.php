@@ -45,9 +45,9 @@
 		
 		
 		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-		$sql_cash = "INSERT INTO `depslip_trans` (`id`, `date_recorded`, `name`, `pr_num`, `or_num`, `particular`, `amount`, `cashier`, `remarks`, `date`)
+		$sql_dp = "INSERT INTO `depslip_trans` (`id`, `date_recorded`, `name`, `pr_num`, `or_num`, `particular`, `amount`, `cashier`, `remarks`, `date`)
 		VALUES ('$id', '$depslip_date_rec', '$depslip_name', '$depslip_pr', '$depslip_or', '$depslip_particular', '$depslip_amount', '$depslip_cashier', '$depslip_remarks', '$depslip_date')";
-		$query = mysqli_query($conn, $sql_cash);
+		$query = mysqli_query($conn, $sql_dp);
 		
 		if($query){
 			header ('location: sbyc_dailytransaction.php?now=true');
@@ -75,9 +75,9 @@
 		
 		
 		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-		$sql_cash = "INSERT INTO `check_trans` (`id`, `date_recorded`, `name`, `pr_num`, `or_num`, `particular`, `amount`, `cashier`, `remarks`, `date`)
+		$sql_ck = "INSERT INTO `check_trans` (`id`, `date_recorded`, `name`, `pr_num`, `or_num`, `particular`, `amount`, `cashier`, `remarks`, `date`)
 		VALUES ('$id', '$check_date_rec', '$check_name', '$check_pr', '$check_or', '$check_particular', '$check_amount', '$check_cashier', '$check_remarks', '$check_date')";
-		$query = mysqli_query($conn, $sql_cash);
+		$query = mysqli_query($conn, $sql_ck);
 		
 		if($query){
 			header ('location: sbyc_dailytransaction.php?now=true');
@@ -105,9 +105,9 @@
 		
 		
 		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-		$sql_cash = "INSERT INTO `credit_trans` (`id`, `date_recorded`, `name`, `pr_num`, `or_num`, `particular`, `amount`, `cashier`, `remarks`, `date`)
+		$sql_cc = "INSERT INTO `credit_trans` (`id`, `date_recorded`, `name`, `pr_num`, `or_num`, `particular`, `amount`, `cashier`, `remarks`, `date`)
 		VALUES ('$id', '$credit_date_rec', '$credit_name', '$credit_pr', '$credit_or', '$credit_particular', '$credit_amount', '$credit_cashier', '$credit_remarks', '$credit_date')";
-		$query = mysqli_query($conn, $sql_cash);
+		$query = mysqli_query($conn, $sql_cc);
 		
 		if($query){
 			header ('location: sbyc_dailytransaction.php?now=true');
@@ -135,9 +135,9 @@
 		
 		
 		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-		$sql_cash = "INSERT INTO `pr_trans` (`id`, `date_recorded`, `name`, `pr_num`, `or_num`, `particular`, `amount`, `cashier`, `remarks`, `date`)
+		$sql_pr = "INSERT INTO `pr_trans` (`id`, `date_recorded`, `name`, `pr_num`, `or_num`, `particular`, `amount`, `cashier`, `remarks`, `date`)
 		VALUES ('$id', '$pr_date_rec', '$pr_name', '$pr_pr', '$pr_or', '$pr_particular', '$pr_amount', '$pr_cashier', '$pr_remarks', '$pr_date')";
-		$query = mysqli_query($conn, $sql_cash);
+		$query = mysqli_query($conn, $sql_pr);
 		
 		if($query){
 			header ('location: sbyc_dailytransaction.php?now=true');
@@ -158,18 +158,18 @@
 		$bill_invoice_no = $_POST['invoice'];
 		$bill_particular = $_POST['particular'];
 		$bill_amount = $_POST['amount'];
-		$bill_receive = $_POST['received_by'];
+		$bill_receive = $_POST['receive'];
 		$bill_remarks = $_POST['remarks'];
 		$bill_date = $_POST['date'];
 		
 		
 		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-		$sql_cash = "INSERT INTO `bill_trans` (`id`, `date_recorded`, `name`, `invoice_no`, `particular`, `amount`, `received_by`, `remarks`, `date`)
+		$sql_bill = "INSERT INTO `bill_trans` (`id`, `date_recorded`, `name`, `invoice_no`,`particular`, `amount`, `received_by`, `remarks`, `date`)
 		VALUES ('$id', '$bill_date_rec', '$bill_name', '$bill_invoice_no', '$bill_particular', '$bill_amount', '$bill_receive', '$bill_remarks', '$bill_date')";
-		$query = mysqli_query($conn, $sql_cash);
+		$query = mysqli_query($conn, $sql_bill);
 		
 		if($query){
-			header ('location: sbyc_dailytransaction.php?now=true');
+			header ('location: sbyc_dailytransaction.php');
 		}
 		
 		mysqli_close($conn);
