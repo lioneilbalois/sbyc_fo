@@ -10,19 +10,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<<<<<<< Updated upstream
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/styles.css">
-=======
->>>>>>> Stashed changes
     <script src="js/jquery.min.js"></script>
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="jquery-ui/jquery-ui.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/script.js"></script>
-<<<<<<< Updated upstream
-	
-=======
     <link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/jquery-ui.min.css">
 	<link rel="stylesheet" href="jquery-ui/jquery-ui.structure.css">
@@ -50,7 +42,6 @@
 			color:#DEFCFC;
 		}
 	</style>
->>>>>>> Stashed changes
 
     <title>Front Office | Daily Transaction</title>
 	<link rel="icon" href="img/sbyc.png">
@@ -90,6 +81,9 @@
 					<div style="float:right">
 						<h3>
 							 Date: <input type="text" id="datepicker"> 
+							 From: <input type="text" id="datepicker"> 
+							 To: <input type="text" id="datepicker"> 
+							 Week: <input type="text" id="datepicker"> 
 							<input type="submit" class="btn btn-info" name="sel_date_submit" id="sel_date_submit">
 						</h3>
 					</div> <br> <br> <hr>
@@ -389,7 +383,7 @@
 													<label for="or">OR:</label>
 													<input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
 													<label for="particular">Particular:</label>
-													<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+													<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 													<label for="amount">Amount:</label>
 													<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, document.getElementById('amount<?php echo $row['id']; ?>').value)" value="<?php echo $row['amount'];?>"> 
 													<label for="cashier">Cashier:</label>
@@ -492,9 +486,9 @@
 							<label for="or">OR:</label>
 							<input type="text" id="or" name="or" placeholder="Input OR" class="form-control"> 
 							<label for="particular">Particular:</label>
-							<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
+							<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control"> 
 							<label for="amount">Amount:</label>
-							<input type="text" id="amount_check" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_check').value))"> 
+							<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 							<label for="cashier">Cashier:</label>
 							<select class="form-select form-control" aria-label="Default select example" name="cashier">
 							  <option selected disabled>Select Cashier</option>
@@ -578,7 +572,7 @@
 													<label for="or">OR:</label>
 													<input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
 													<label for="particular">Particular:</label>
-													<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+													<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 													<label for="amount">Amount:</label>
 													<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
 													<label for="cashier">Cashier:</label>
@@ -621,7 +615,7 @@
 
 										  <!-- Modal body -->
 										<div class="modal-body">
-											Do you want to delete this transaction? <?php echo $row['name'];?>
+											Do you want to delete this transaction?
 										</div>
 
 										  <!-- Modal footer -->
@@ -683,9 +677,9 @@
 						<label for="or">OR:</label>
 						<input type="text" id="or" name="or" placeholder="Input OR" class="form-control"> 
 						<label for="particular">Particular:</label>
-						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
+						<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control"> 
 						<label for="amount">Amount:</label>
-						<input type="text" id="amount_cc" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cc').value))"> 
+						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 						<label for="cashier">Cashier:</label>
 						<select class="form-select form-control" aria-label="Default select example" name="cashier">
 							<option selected disabled>Select Cashier</option>
@@ -769,7 +763,7 @@
 												<label for="or">OR:</label>
 												<input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
 												<label for="particular">Particular:</label>
-												<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+												<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 												<label for="amount">Amount:</label>
 												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
 												<label for="cashier">Cashier:</label>
@@ -874,9 +868,9 @@
 						<label for="or">OR:</label>
 						<input type="text" id="or" name="or" placeholder="Input OR" class="form-control"> 
 						<label for="particular">Particular:</label>
-						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
+						<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control"> 
 						<label for="amount">Amount:</label>
-						<input type="text" id="amount_pr" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_pr').value))"> 
+						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 						<label for="cashier">Cashier:</label>
 						<select class="form-select form-control" aria-label="Default select example" name="cashier">
 							<option selected disabled>Select Cashier</option>
@@ -960,7 +954,7 @@
 												<label for="or">OR:</label>
 												<input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
 												<label for="particular">Particular:</label>
-												<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+												<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 												<label for="amount">Amount:</label>
 												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
 												<label for="cashier">Cashier:</label>
@@ -1042,7 +1036,7 @@
 	</div>
 	</div>
 
-	<!--SIXTH TABLE--><!--SIXTH TABLE--><!--SIXTH TABLE--><!--SIXTH TABLE--><!--SIXTH TABLE--><!--SIXTH TABLE-->
+	<!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE-->
 	<div class="container-fluid mt-3">
 	<div class="row">
 		<div class="col-md-12">
@@ -1059,17 +1053,6 @@
 					<div class="modal-body">
 					<form action="add.php" method="POST">
 						<label for="name">Name:</label>
-<<<<<<< Updated upstream
-						<input type="text" id="name" name="name" placeholder="Input Name" class="form-control">
-						<label for="invoice">Invoice No:</label>
-						<input type="text" id="invoice" name="invoice" placeholder="Input Invoice No." class="form-control"> 
-						<label for="particular">Particular:</label>
-						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
-						<label for="amount">Amount:</label>
-						<input type="text" id="amount_bill" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_bill').value))"> 
-						<label for="cashier">Received By:</label>
-						<input type="text" id="received_by" name="received_by" placeholder="Received By:" class="form-control"> 
-=======
 						<input type="text" name="name" placeholder="Input Name" class="form-control">
 						<label for="invoice">PR:</label>
 						<input type="text" name="invoice" placeholder="Input Invoice No." class="form-control"> 
@@ -1079,7 +1062,6 @@
 						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 						<label for="receive">Received By:</label>
 						<input type="text" id="receive" name="receive" placeholder="Received By:" class="form-control"> 
->>>>>>> Stashed changes
 						<label for="remarks">Remarks:</label>
 						<input type="text" id="remarks" name="remarks" placeholder="Input Remarks" class="form-control"> 
 						<label for="date">BCS Date / By:</label>
@@ -1148,19 +1130,11 @@
 												<label for="invoice">Invoice No.:</label>
 												<input type="text" id="invoice" name="invoice" placeholder="Input Invoice No." class="form-control" value="<?php echo $row['invoice_no'];?>"> 
 												<label for="particular">Particular:</label>
-<<<<<<< Updated upstream
-												<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
-												<label for="amount">Amount:</label>
-												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
-												<label for="received_by">Received by:</label>
-												<input type="text" id="received_by" name="received_by" placeholder="Received By" class="form-control" value="<?php echo $row['received_by'];?>">
-=======
 												<input type="text" name="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 												<label for="amount">Amount:</label>
 												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
 												<label for="receive">Received by:</label>
 												<input type="text"  id="receive" name="receive" placeholder="Received By" class="form-control" value="<?php echo $row['received_by'];?>">
->>>>>>> Stashed changes
 												<label for="remarks">Remarks:</label>
 												<input type="text" id="remarks" name="remarks" placeholder="Input Remarks" class="form-control" value="<?php echo $row['remarks'];?>"> 
 												<label for="date">BCS Date / By:</label>

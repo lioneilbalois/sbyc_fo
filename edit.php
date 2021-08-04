@@ -92,42 +92,13 @@
 		
 		$id = $_GET['id'];
 		$bill_name = $_POST['name'];
-<<<<<<< Updated upstream
-		$bill_pr = $_POST['pr'];
-		$bill_or = $_POST['or'];
-		$bill_particular = $_POST['particular'];
-		$bill_amount = $_POST['amount'];
-		$bill_cashier = $_POST['cashier'];
-=======
 		$bill_invoice = $_POST['invoice'];
 		$bill_particular = $_POST['particular'];
 		$bill_amount = $_POST['amount'];
 		$bill_receive = $_POST['receive'];
->>>>>>> Stashed changes
 		$bill_remarks = $_POST['remarks'];
 		$bill_date = $_POST['date'];
 
-		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-		$query = "UPDATE `pr_trans` SET `name`='$bill_name',`pr_num`='$bill_pr', `or_num`='$bill_or', `particular`='$bill_particular',`amount`='$bill_amount',`cashier`='$bill_cashier',`remarks`='$bill_remarks' WHERE `id` = $id";
-		
-		$result = mysqli_query($conn, $query);
-		if($result){
-			header('location: sbyc_dailytransaction.php?now=true');
-		}
-		mysqli_close($conn);
-	}
-	
-	if(isset($_POST['editbillBtn'])){
-		
-		$id = $_GET['id'];
-		$bill_name = $_POST['name'];
-		$bill_invoice = $_POST['invoice'];
-		$bill_particular = $_POST['particular'];
-		$bill_amount = $_POST['amount'];
-		$bill_receive = $_POST['received_by'];
-		$bill_remarks = $_POST['remarks'];
-		$bill_date = $_POST['date'];
-		
 		$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 		$query = "UPDATE `bill_trans` SET `name`='$bill_name',`invoice_no`='$bill_invoice',`particular`='$bill_particular',`amount`='$bill_amount',`received_by`='$bill_receive',`remarks`='$bill_remarks' WHERE `id` = $id";
 		
