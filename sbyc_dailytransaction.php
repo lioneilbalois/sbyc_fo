@@ -26,9 +26,25 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<script>
-		$( function() {
-			$( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
-		} );
+		const tables = ["#table_cash", "#table_dp", "#table_ck", "#table_cc", "#table_pr"];
+
+		$(function(){
+			$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+		});
+
+		$(document).ready(function(){
+
+				$("#datepicker").on('change', function() {
+					var date = $(this).datepicker({ dateFormat: 'dd-mm-yy' }).val();
+
+				for(let i = 0; i < tables.length; i++) {
+					$(tables[i]).load("table_content.php", {
+					datepicker : date
+					});
+				}
+			});
+		});
+		
   	</script>
 
 	<style>
@@ -81,10 +97,6 @@
 					<div style="float:right">
 						<h3>
 							 Date: <input type="text" id="datepicker"> 
-							 From: <input type="text" id="datepicker"> 
-							 To: <input type="text" id="datepicker"> 
-							 Week: <input type="text" id="datepicker"> 
-							<input type="submit" class="btn btn-info" name="sel_date_submit" id="sel_date_submit">
 						</h3>
 					</div> <br> <br> <hr>
 				
@@ -107,7 +119,7 @@
 							<label for="or">OR:</label>
 							<input type="text" id="or" name="or" placeholder="Input OR" class="form-control"> 
 							<label for="particular">Particular:</label>
-							<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control"> 
+							<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
 							<label for="amount">Amount:</label>
 							<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 							<label for="cashier">Cashier:</label>
@@ -133,8 +145,8 @@
 					</div>
 				  </div>
 				</div>
-				<table class="table table-bordered ">
-					<thead >
+				<table class="table table-bordered">
+					<thead>
 						<tr>
 							
 							<th>Name</th>
@@ -149,7 +161,7 @@
 						
 						<tr>
 					</thead>
-					<tbody>
+					<tbody id="table_cash">
 					<?php 
 						$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 						$sql  = "SELECT * FROM `cash_trans` WHERE `date_recorded` = '$sel_date'";
@@ -325,7 +337,7 @@
 				  </div>
 				</div>
 				<table class="table table-bordered ">
-					<thead >
+					<thead>
 						<tr>
 							
 							<th>Name</th>
@@ -340,7 +352,7 @@
 						
 						<tr>
 					</thead>
-					<tbody>
+					<tbody id="table_dp">
 					<?php 
 						$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 						$sql  = "SELECT * FROM `depslip_trans` WHERE `date_recorded` = '$sel_date'";
@@ -486,7 +498,7 @@
 							<label for="or">OR:</label>
 							<input type="text" id="or" name="or" placeholder="Input OR" class="form-control"> 
 							<label for="particular">Particular:</label>
-							<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control"> 
+							<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
 							<label for="amount">Amount:</label>
 							<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 							<label for="cashier">Cashier:</label>
@@ -528,7 +540,7 @@
 						
 						<tr>
 					</thead>
-					<tbody>
+					<tbody id="table_ck">
 					<?php 
 						$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 						$sql  = "SELECT * FROM `check_trans` WHERE `date_recorded` = '$sel_date'";
@@ -677,7 +689,7 @@
 						<label for="or">OR:</label>
 						<input type="text" id="or" name="or" placeholder="Input OR" class="form-control"> 
 						<label for="particular">Particular:</label>
-						<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control"> 
+						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
 						<label for="amount">Amount:</label>
 						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 						<label for="cashier">Cashier:</label>
@@ -719,7 +731,7 @@
 					
 					<tr>
 				</thead>
-				<tbody>
+				<tbody id="table_cc">
 				<?php 
 					$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 					$sql  = "SELECT * FROM `credit_trans` WHERE `date_recorded` = '$sel_date'";
@@ -868,7 +880,7 @@
 						<label for="or">OR:</label>
 						<input type="text" id="or" name="or" placeholder="Input OR" class="form-control"> 
 						<label for="particular">Particular:</label>
-						<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control"> 
+						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
 						<label for="amount">Amount:</label>
 						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 						<label for="cashier">Cashier:</label>
@@ -895,7 +907,7 @@
 				</div>
 			</div>
 			<table class="table table-bordered ">
-				<thead >
+				<thead>
 					<tr>
 						
 						<th>Name</th>
@@ -910,7 +922,7 @@
 					
 					<tr>
 				</thead>
-				<tbody>
+				<tbody id="table_pr">
 				<?php 
 					$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 					$sql  = "SELECT * FROM `pr_trans` WHERE `date_recorded` = '$sel_date'";
