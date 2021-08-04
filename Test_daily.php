@@ -3,6 +3,21 @@
 	$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 	$sel_date = date("Y-m-d");
 
+	// apply sorted date, this is the main variable for all table and sorts
+	if($_GET['now'] != 'true'){
+		$sel_date = $_GET['date_sort'];
+	}
+	
+	// to sum amounts per table @ bottom of the page
+	function summary($table){
+		$getDate = $GLOBALS['sel_date'];
+		$sum_q = "SELECT SUM(`amount`) FROM `$table` WHERE `date_recorded` = '$getDate';"; 
+		$do_q = mysqli_query($GLOBALS['conn'], $sum_q);
+		
+		$summ_row = mysqli_fetch_array($do_q);
+		if(mysqli_num_rows($do_q)) echo ($summ_row['0']);
+		if ($summ_row['0'] == "") echo "-";
+	}
 ?>
 
 <!doctype html>
@@ -10,66 +25,22 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="js/jquery.min.js"></script>
-	<script src="js/jquery-3.6.0.min.js"></script>
-	<script src="jquery-ui/jquery-ui.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/script.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/jquery-ui.min.css">
-	<link rel="stylesheet" href="jquery-ui/jquery-ui.structure.css">
-	<link rel="stylesheet" href="jquery-ui/jquery-ui.theme.css">
+	<link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js" ></script>
+	<script src="js/script.js"></script>
+	
 
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="/resources/demos/style.css">
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-	<script>
-		const tables = ["#table_cash", "#table_dp", "#table_ck", "#table_cc", "#table_pr"];
-		const tables_sql = ["cash_trans", "depslip_trans", "check_trans", "credit_trans", "pr_trans"]
-
-		$(function(){
-			$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-		});
-
-		$(document).ready(function(){
-
-				$("#datepicker").on('change', function() {
-					var date = $(this).datepicker({ dateFormat: 'dd-mm-yy' }).val();
-
-				for(let i = 0; i < tables.length; i++) {
-					$(tables[i]).load("table_content.php", {
-					datepicker : date,
-					table_sql : tables_sql[i]
-					});
-				}
-			});
-		});
-		
-  	</script>
-
-	<style>
-		body{
-			background-color: #F7FBFC;
-		}
-		thead{
-			background-color: #548CA8;
-		}
-		th{
-			color:#DEFCFC;
-		}
-	</style>
-
-    <title>Front Office | Daily Transaction</title>
+    <title>Front Office</title>
 	<link rel="icon" href="img/sbyc.png">
 	</head>
 	<body>
 
-		<!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR-->
+<!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR--><!--NAVBAR-->
 		<nav class="navbar navbar-expand-md fixed-top" style="background-color: #548CA8;">
 		
-			<a class="navbar-brand" href="index.php"><img src="img/sbyc.png" alt="Subic Bay Yacht Club Logo" width="75px" height="75px"></a>
+		<a class="navbar-brand" href="index.php"><img src="img/sbyc.png" alt="Subic Bay Yacht Club Logo" width="75px" height="75px"></a>
 		
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 				<span class="navbar-toggler-icon"></span>
@@ -91,7 +62,7 @@
 			</div>
 		</nav>
 
-	<!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE-->
+<!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE-->
 	  <div class="container-fluid mt-3">
 		<div class="row">
 			<div class="col-md-12">
@@ -111,15 +82,14 @@
 					  </div>
 					</div>
 				</div>
-				<div style="float:right"><h3>Date: <input type="text" id="datepicker"> </h3></div> <br> <br> <hr>
-				
+				<div style="float:right"><h3> Date: <input type="date" value="<?php echo $sel_date; ?>" id="date_selector"> </h3></div> <br> <br> <hr>
 				<h3 id="CASH">Cash (CA) Transaction <button type="button" class="btn btn-primary" style="float:right;" data-backdrop="static" data-toggle="modal" data-target="#addcaModal">Add</button></h3>
 				<div class="modal fade" id="addcaModal">
 				  <div class="modal-dialog">
 					<div class="modal-content">
 
 					  <div class="modal-header bg-primary ft-white">
-						<h4 class="modal-title" style="color:white;">Add Cash Transaction Entry</h4>
+						<h4 class="modal-title">Add Cash Transaction Entry</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					  </div>
 
@@ -132,7 +102,7 @@
 							<label for="or">OR:</label>
 							<input type="text" id="or" name="or" placeholder="Input OR" class="form-control"> 
 							<label for="particular">Particular:</label>
-							<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
+							<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control"> 
 							<label for="amount">Amount:</label>
 							<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
 							<label for="cashier">Cashier:</label>
@@ -158,8 +128,8 @@
 					</div>
 				  </div>
 				</div>
-				<table class="table table-bordered">
-					<thead>
+				<table class="table table-bordered ">
+					<thead >
 						<tr>
 							
 							<th>Name</th>
@@ -170,11 +140,11 @@
 							<th>Cashier</th>
 							<th>Remarks</th>
 							<th>BCS Date/By</th>
-							<th width="10%"></th>
+							<th></th>
 						
 						<tr>
 					</thead>
-					<tbody id="table_cash">
+					<tbody>
 					<?php 
 						$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 						$sql  = "SELECT * FROM `cash_trans` WHERE `date_recorded` = '$sel_date'";
@@ -195,7 +165,7 @@
 							<td><?php echo $row['date'];?></td>
 							<td>
 							
-								<!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit-->
+								<!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit--><!--Edit-->
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-backdrop="static" data-target="#editcaModal<?php echo $row['id']; ?>">
 									Edit
 								</button>
@@ -255,7 +225,7 @@
 
 										  <!-- Modal Header -->
 										<div class="modal-header bg-danger ft-white">
-											<h4 class="modal-title" style="color:white;">Delete Cash Transaction Entry </h4>
+											<h4 class="modal-title">Delete Cash Transaction Entry </h4>
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 
@@ -300,7 +270,7 @@
 		</div>
 	  </div>
 	  
-	<!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE-->
+<!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE--><!--SECOND TABLE-->
 		<div class="container-fluid mt-3">
 		<div class="row">
 			<div class="col-md-12">
@@ -310,7 +280,7 @@
 					<div class="modal-content">
 
 					  <div class="modal-header bg-primary ft-white">
-						<h4 class="modal-title"  style="color:white;">Add Deposit Slip Transaction Entry</h4>
+						<h4 class="modal-title">Add Deposit Slip Transaction Entry</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					  </div>
 	
@@ -350,7 +320,7 @@
 				  </div>
 				</div>
 				<table class="table table-bordered ">
-					<thead>
+					<thead >
 						<tr>
 							
 							<th>Name</th>
@@ -361,11 +331,11 @@
 							<th>Cashier</th>
 							<th>Remarks</th>
 							<th>BCS Date/By</th>
-							<th width="10%"></th>
+							<th></th>
 						
 						<tr>
 					</thead>
-					<tbody id="table_dp">
+					<tbody>
 					<?php 
 						$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 						$sql  = "SELECT * FROM `depslip_trans` WHERE `date_recorded` = '$sel_date'";
@@ -408,7 +378,7 @@
 													<label for="or">OR:</label>
 													<input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
 													<label for="particular">Particular:</label>
-													<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+													<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 													<label for="amount">Amount:</label>
 													<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, document.getElementById('amount<?php echo $row['id']; ?>').value)" value="<?php echo $row['amount'];?>"> 
 													<label for="cashier">Cashier:</label>
@@ -444,7 +414,7 @@
 									<div class="modal-content">
 
 										<div class="modal-header bg-danger ft-white">
-											<h4 class="modal-title" style="color:white;">Delete Cash Transaction Entry </h4>
+											<h4 class="modal-title">Delete Cash Transaction Entry </h4>
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 
@@ -498,7 +468,7 @@
 					<div class="modal-content">
 
 					  <div class="modal-header bg-primary ft-white">
-						<h4 class="modal-title" style="color:white;">Add Check Transaction Entry</h4>
+						<h4 class="modal-title">Add Check Transaction Entry</h4>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					  </div>
 
@@ -513,7 +483,7 @@
 							<label for="particular">Particular:</label>
 							<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
 							<label for="amount">Amount:</label>
-							<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
+							<input type="text" id="amount_check" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_check').value))"> 
 							<label for="cashier">Cashier:</label>
 							<select class="form-select form-control" aria-label="Default select example" name="cashier">
 							  <option selected disabled>Select Cashier</option>
@@ -549,11 +519,11 @@
 							<th>Cashier</th>
 							<th>Remarks</th>
 							<th>BCS Date/By</th>
-							<th width="10%"></th>
+							<th></th>
 						
 						<tr>
 					</thead>
-					<tbody id="table_ck">
+					<tbody>
 					<?php 
 						$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 						$sql  = "SELECT * FROM `check_trans` WHERE `date_recorded` = '$sel_date'";
@@ -597,7 +567,7 @@
 													<label for="or">OR:</label>
 													<input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
 													<label for="particular">Particular:</label>
-													<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+													<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 													<label for="amount">Amount:</label>
 													<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
 													<label for="cashier">Cashier:</label>
@@ -634,13 +604,13 @@
 
 										  <!-- Modal Header -->
 										<div class="modal-header bg-danger ft-white">
-											<h4 class="modal-title" style="color:white;">Delete Check Transaction Entry </h4>
+											<h4 class="modal-title">Delete Check Transaction Entry </h4>
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 
 										  <!-- Modal body -->
 										<div class="modal-body">
-											Do you want to delete this transaction?
+											Do you want to delete this transaction? <?php echo $row['name'];?>
 										</div>
 
 										  <!-- Modal footer -->
@@ -689,7 +659,7 @@
 				<div class="modal-content">
 
 					<div class="modal-header bg-primary ft-white">
-					<h4 class="modal-title" style="color:white;">Add Credit Card Transaction Entry</h4>
+					<h4 class="modal-title">Add Credit Card Transaction Entry</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -704,7 +674,7 @@
 						<label for="particular">Particular:</label>
 						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
 						<label for="amount">Amount:</label>
-						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
+						<input type="text" id="amount_cc" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cc').value))"> 
 						<label for="cashier">Cashier:</label>
 						<select class="form-select form-control" aria-label="Default select example" name="cashier">
 							<option selected disabled>Select Cashier</option>
@@ -740,11 +710,11 @@
 						<th>Cashier</th>
 						<th>Remarks</th>
 						<th>BCS Date/By</th>
-						<th width="10%"></th>
+						<th></th>
 					
 					<tr>
 				</thead>
-				<tbody id="table_cc">
+				<tbody>
 				<?php 
 					$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 					$sql  = "SELECT * FROM `credit_trans` WHERE `date_recorded` = '$sel_date'";
@@ -788,7 +758,7 @@
 												<label for="or">OR:</label>
 												<input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
 												<label for="particular">Particular:</label>
-												<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+												<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 												<label for="amount">Amount:</label>
 												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
 												<label for="cashier">Cashier:</label>
@@ -825,7 +795,7 @@
 
 										<!-- Modal Header -->
 									<div class="modal-header bg-danger ft-white">
-										<h4 class="modal-title" style="color:white;">Delete Credit Card Transaction Entry </h4>
+										<h4 class="modal-title">Delete Credit Card Transaction Entry </h4>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
 
@@ -880,7 +850,7 @@
 				<div class="modal-content">
 
 					<div class="modal-header bg-primary ft-white">
-					<h4 class="modal-title" style="color:white;">Add PR Transaction Entry</h4>
+					<h4 class="modal-title">Add PR Transaction Entry</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
@@ -895,7 +865,7 @@
 						<label for="particular">Particular:</label>
 						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
 						<label for="amount">Amount:</label>
-						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
+						<input type="text" id="amount_pr" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_pr').value))"> 
 						<label for="cashier">Cashier:</label>
 						<select class="form-select form-control" aria-label="Default select example" name="cashier">
 							<option selected disabled>Select Cashier</option>
@@ -920,7 +890,7 @@
 				</div>
 			</div>
 			<table class="table table-bordered ">
-				<thead>
+				<thead >
 					<tr>
 						
 						<th>Name</th>
@@ -931,11 +901,11 @@
 						<th>Cashier</th>
 						<th>Remarks</th>
 						<th>BCS Date/By</th>
-						<th width="10%"></th>
+						<th></th>
 					
 					<tr>
 				</thead>
-				<tbody id="table_pr">
+				<tbody>
 				<?php 
 					$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 					$sql  = "SELECT * FROM `pr_trans` WHERE `date_recorded` = '$sel_date'";
@@ -979,7 +949,7 @@
 												<label for="or">OR:</label>
 												<input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
 												<label for="particular">Particular:</label>
-												<input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+												<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 												<label for="amount">Amount:</label>
 												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
 												<label for="cashier">Cashier:</label>
@@ -1016,7 +986,7 @@
 
 										<!-- Modal Header -->
 									<div class="modal-header bg-danger ft-white">
-										<h4 class="modal-title" style="color:white;">Delete PR Transaction Entry </h4>
+										<h4 class="modal-title">Delete PR Transaction Entry </h4>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
 
@@ -1061,7 +1031,7 @@
 	</div>
 	</div>
 
-	<!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE--><!--FIFTH TABLE-->
+	<!--SIXTH TABLE--><!--SIXTH TABLE--><!--SIXTH TABLE--><!--SIXTH TABLE--><!--SIXTH TABLE--><!--SIXTH TABLE-->
 	<div class="container-fluid mt-3">
 	<div class="row">
 		<div class="col-md-12">
@@ -1071,22 +1041,22 @@
 				<div class="modal-content">
 
 					<div class="modal-header bg-primary ft-white">
-					<h4 class="modal-title" style="color:white;">Add Send Bill Transaction Entry</h4>
+					<h4 class="modal-title">Add Send Bill Transaction Entry</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 
 					<div class="modal-body">
 					<form action="add.php" method="POST">
 						<label for="name">Name:</label>
-						<input type="text" name="name" placeholder="Input Name" class="form-control">
-						<label for="invoice">PR:</label>
-						<input type="text" name="invoice" placeholder="Input Invoice No." class="form-control"> 
+						<input type="text" id="name" name="name" placeholder="Input Name" class="form-control">
+						<label for="invoice">Invoice No:</label>
+						<input type="text" id="invoice" name="invoice" placeholder="Input Invoice No." class="form-control"> 
 						<label for="particular">Particular:</label>
 						<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control"> 
 						<label for="amount">Amount:</label>
-						<input type="text" id="amount_cash" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_cash').value))"> 
-						<label for="receive">Received By:</label>
-						<input type="text" id="receive" name="receive" placeholder="Received By:" class="form-control"> 
+						<input type="text" id="amount_bill" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount_bill').value))"> 
+						<label for="cashier">Received By:</label>
+						<input type="text" id="received_by" name="received_by" placeholder="Received By:" class="form-control"> 
 						<label for="remarks">Remarks:</label>
 						<input type="text" id="remarks" name="remarks" placeholder="Input Remarks" class="form-control"> 
 						<label for="date">BCS Date / By:</label>
@@ -1101,7 +1071,7 @@
 				</div>
 				</div>
 			</div>
-			<table class="table table-bordered">
+			<table class="table table-bordered ">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -1111,7 +1081,7 @@
 						<th>Received By</th>
 						<th>Remarks</th>
 						<th>BCS Date/By</th>
-						<th width="10%"></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -1155,11 +1125,11 @@
 												<label for="invoice">Invoice No.:</label>
 												<input type="text" id="invoice" name="invoice" placeholder="Input Invoice No." class="form-control" value="<?php echo $row['invoice_no'];?>"> 
 												<label for="particular">Particular:</label>
-												<input type="text" name="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+												<input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
 												<label for="amount">Amount:</label>
 												<input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
-												<label for="receive">Received by:</label>
-												<input type="text"  id="receive" name="receive" placeholder="Received By" class="form-control" value="<?php echo $row['received_by'];?>">
+												<label for="received_by">Received by:</label>
+												<input type="text" id="received_by" name="received_by" placeholder="Received By" class="form-control" value="<?php echo $row['received_by'];?>">
 												<label for="remarks">Remarks:</label>
 												<input type="text" id="remarks" name="remarks" placeholder="Input Remarks" class="form-control" value="<?php echo $row['remarks'];?>"> 
 												<label for="date">BCS Date / By:</label>
@@ -1170,9 +1140,8 @@
 										<div class="modal-footer">
 											<button type="button" class="btn" data-dismiss="modal">Cancel</button>
 											<input type="submit" class="btn btn-primary" value="Save" name="editbillBtn" id="editbillBtn">
-											</form>
 										</div>
-											
+											</form>
 									</div>
 								</div>
 							</div>
@@ -1185,7 +1154,7 @@
 
 										<!-- Modal Header -->
 									<div class="modal-header bg-danger ft-white">
-										<h4 class="modal-title" style="color:white;">Delete Send Bill Transaction Entry </h4>
+										<h4 class="modal-title">Delete Send Bill Transaction Entry </h4>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
 
@@ -1247,27 +1216,27 @@
 					<tbody>
 						<tr>
 							<td><h6>Cash Transaction (CA)</h6></td>
-							<td><?php// summary('cash_trans'); ?></td>
+							<td><?php summary('cash_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Depslip Transaction (DPSLP)</h6></td>
-							<td><?php// summary('depslip_trans'); ?></td>
+							<td><?php summary('depslip_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Check Transaction (CK)</h6></td>
-							<td><?php// summary('check_trans'); ?></td>
+							<td><?php summary('check_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Credit Card Transaction (CC)</h6></td>
-							<td><?php// summary('credit_trans'); ?></td>
+							<td><?php summary('credit_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Provisional Receipt (PR)</h6></td>
-							<td><?php// summary('pr_trans'); ?></td>
+							<td><?php summary('pr_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Send Bill</h6></td>
-							<td><?php// summary('bill_trans'); ?></td>
+							<td><?php summary('bill_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>TOTAL TRANSACTIONS</h6></td>
