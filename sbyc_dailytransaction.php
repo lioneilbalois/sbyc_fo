@@ -15,6 +15,8 @@
 	<script src="jquery-ui/jquery-ui.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/script.js"></script>
+
+	<link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/jquery-ui.min.css">
 	<link rel="stylesheet" href="jquery-ui/jquery-ui.structure.css">
@@ -34,6 +36,17 @@
 		});
 
 		$(document).ready(function(){
+				$('#sortType').on('change', function () {
+					$('#showSort').load("loadSorting.php", { kind: $(this).val() });
+					//alert($(this).val());
+
+					if ($(this).val() == "daily") {
+						alert('im here');
+						$(function(){
+							$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+						});
+					}
+				});
 
 				$("#datepicker").on('change', function() {
 					var date = $(this).datepicker({ dateFormat: 'dd-mm-yy' }).val();
@@ -48,18 +61,6 @@
 		});
 		
   	</script>
-
-	<style>
-		body{
-			background-color: #F7FBFC;
-		}
-		thead{
-			background-color: #548CA8;
-		}
-		th{
-			color:#DEFCFC;
-		}
-	</style>
 
     <title>Front Office | Daily Transaction</title>
 	<link rel="icon" href="img/sbyc.png">
@@ -111,7 +112,17 @@
 					  </div>
 					</div>
 				</div>
-				<div style="float:right"><h3>Date: <input type="text" id="datepicker"> </h3></div> <br> <br> <hr>
+				<div style="float:right; ">
+					<select name="sortType" id="sortType" style="float: right;">
+						<option value="daily">Daily</option>
+						<option value="weeklyDef">Weekly - Default</option>
+						<option value="weeklyMod">Weekly - Modified</option>
+					</select>
+					<br><br>
+					<h3 id="showSort"> 
+						Date: <input type="text" id="datepicker"> 
+					</h3>
+				</div> <br> <br> <br><br><br> <hr>
 				
 				<h3 id="CASH">Cash (CA) Transaction <button type="button" class="btn btn-primary" style="float:right;" data-backdrop="static" data-toggle="modal" data-target="#addcaModal">Add</button></h3>
 				<div class="modal fade" id="addcaModal">

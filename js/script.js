@@ -1,4 +1,11 @@
-
+// for checking if amount tb has dot (decimal)
+function hasDot(val){
+	console.log(val);
+	for(let i = 0; i < (val.length); i++){
+		if((val[i]).charCodeAt(0) == 46) return true;
+	} 
+	return false;
+}
 
 function isNumber(evt, val) {
 	evt = (evt) ? evt : window.event;	
@@ -12,5 +19,3 @@ function isNumber(evt, val) {
 	}
 	return true;
 }
-
-
