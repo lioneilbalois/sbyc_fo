@@ -27,6 +27,7 @@
 
 	<script>
 		const tables = ["#table_cash", "#table_dp", "#table_ck", "#table_cc", "#table_pr"];
+		const tables_sql = ["cash_trans", "depslip_trans", "check_trans", "credit_trans", "pr_trans"]
 
 		$(function(){
 			$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
@@ -39,7 +40,8 @@
 
 				for(let i = 0; i < tables.length; i++) {
 					$(tables[i]).load("table_content.php", {
-					datepicker : date
+					datepicker : date,
+					table_sql : tables_sql[i]
 					});
 				}
 			});
@@ -96,7 +98,7 @@
 
 					<div style="float:right">
 						<h3>
-							 Date: <input type="text" id="datepicker"> 
+							Date: <input type="text" id="datepicker"> 
 						</h3>
 					</div> <br> <br> <hr>
 				

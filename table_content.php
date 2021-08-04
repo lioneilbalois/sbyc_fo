@@ -1,8 +1,9 @@
 
     <?php 
         $date = $_POST['datepicker'];
+        $table_name = $_POST['table_sql'];
         $conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-        $sql  = "SELECT * FROM `cash_trans` WHERE `date_recorded` = '$date'";
+        $sql  = "SELECT * FROM `$table_name` WHERE `date_recorded` = '$date'";
         $query = mysqli_query($conn, $sql);
         //$row = mysqli_fetch_array($query);
         $row = mysqli_num_rows($query);
@@ -43,7 +44,7 @@
                                     <label for="or">OR:</label>
                                     <input type="text" id="or" name="or" placeholder="Input OR" class="form-control" value="<?php echo $row['or_num'];?>"> 
                                     <label for="particular">Particular:</label>
-                                    <input type="text" id="particular" id="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
+                                    <input type="text" id="particular" name="particular" placeholder="Input Particular" class="form-control" value="<?php echo $row['particular'];?>"> 
                                     <label for="amount">Amount:</label>
                                     <input type="text" id="amount<?php echo $row['id']; ?>" name="amount" placeholder="Input Amount" class="form-control" onkeypress="return isNumber(event, (document.getElementById('amount<?php echo $row['id']; ?>').value))" value="<?php echo $row['amount'];?>"> 
                                     <label for="cashier">Cashier:</label>
