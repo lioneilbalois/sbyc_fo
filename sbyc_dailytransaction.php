@@ -1,8 +1,5 @@
 <?php 
-	date_default_timezone_set('Asia/Manila');	
-	$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-	$sel_date = date("Y-m-d");
-
+	include 'php/functions.php';
 ?>
 
 <!doctype html>
@@ -27,40 +24,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-	<script>
-		const tables = ["#table_cash", "#table_dp", "#table_ck", "#table_cc", "#table_pr"];
-		const tables_sql = ["cash_trans", "depslip_trans", "check_trans", "credit_trans", "pr_trans"]
-
-		$(function(){
-			$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-		});
-
-		$(document).ready(function(){
-				$('#sortType').on('change', function () {
-					$('#showSort').load("loadSorting.php", { kind: $(this).val() });
-					//alert($(this).val());
-
-					if ($(this).val() == "daily") {
-						alert('im here');
-						$(function(){
-							$("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-						});
-					}
-				});
-
-				$("#datepicker").on('change', function() {
-					var date = $(this).datepicker({ dateFormat: 'dd-mm-yy' }).val();
-
-				for(let i = 0; i < tables.length; i++) {
-					$(tables[i]).load("table_content.php", {
-					datepicker : date,
-					table_sql : tables_sql[i]
-					});
-				}
-			});
-		});
-		
-  	</script>
+	
 
     <title>Front Office | Daily Transaction</title>
 	<link rel="icon" href="img/sbyc.png">
@@ -91,11 +55,11 @@
 				</ul>
 			</div>
 		</nav>
-
-	<!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE-->
-	  <div class="container-fluid mt-3">
+		<!-- SECONDARY NAVBAR--><!-- SECONDARY NAVBAR--><!-- SECONDARY NAVBAR-->
+	<div class="container-fluid mt-3">
 		<div class="row">
 			<div class="col-md-12">
+				<br><br><br><br>
 				<div style="float:left">
 					<div class="dropdown dropright">
 					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -115,15 +79,22 @@
 				<div style="float:right; ">
 					<select name="sortType" id="sortType" style="float: right;">
 						<option value="daily">Daily</option>
-						<option value="weeklyDef">Weekly - Default</option>
-						<option value="weeklyMod">Weekly - Modified</option>
+						<option value="weekly">Weekly</option>
 					</select>
 					<br><br>
 					<h3 id="showSort"> 
 						Date: <input type="text" id="datepicker"> 
 					</h3>
-				</div> <br> <br> <br><br><br> <hr>
-				
+				</div> <br> <br> <br><br> <hr>
+			</div>
+		</div>
+	</div>
+
+	<div id="wholeContent">
+	<!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE-->
+	  <div class="container-fluid mt-3">
+		<div class="row">
+			<div class="col-md-12">								
 				<h3 id="CASH">Cash (CA) Transaction <button type="button" class="btn btn-primary" style="float:right;" data-backdrop="static" data-toggle="modal" data-target="#addcaModal">Add</button></h3>
 				<div class="modal fade" id="addcaModal">
 				  <div class="modal-dialog">
@@ -200,7 +171,7 @@
 							<td><?php echo $row['pr_num'];?></td>
 							<td><?php echo $row['or_num'];?></td>
 							<td><?php echo $row['particular'];?></td>
-							<td><?php echo $row['amount'];?></td>
+							<td><?php echo number_format($row['amount'], 2) ?></td>
 							<td><?php echo $row['cashier'];?></td>
 							<td><?php echo $row['remarks'];?></td>
 							<td><?php echo $row['date'];?></td>
@@ -390,7 +361,7 @@
 							<td><?php echo $row['pr_num'];?></td>
 							<td><?php echo $row['or_num'];?></td>
 							<td><?php echo $row['particular'];?></td>
-							<td><?php echo $row['amount'];?></td>
+							<td><?php echo number_format($row['amount'], 2) ?></td>
 							<td><?php echo $row['cashier'];?></td>
 							<td><?php echo $row['remarks'];?></td>
 							<td><?php echo $row['date'];?></td>
@@ -579,7 +550,7 @@
 							<td><?php echo $row['pr_num'];?></td>
 							<td><?php echo $row['or_num'];?></td>
 							<td><?php echo $row['particular'];?></td>
-							<td><?php echo $row['amount'];?></td>
+							<td><?php echo number_format($row['amount'], 2) ?></td>
 							<td><?php echo $row['cashier'];?></td>
 							<td><?php echo $row['remarks'];?></td>
 							<td><?php echo $row['date'];?></td>
@@ -770,7 +741,7 @@
 						<td><?php echo $row['pr_num'];?></td>
 						<td><?php echo $row['or_num'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo $row['amount'];?></td>
+						<td><?php echo number_format($row['amount'], 2) ?></td>
 						<td><?php echo $row['cashier'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -961,7 +932,7 @@
 						<td><?php echo $row['pr_num'];?></td>
 						<td><?php echo $row['or_num'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo $row['amount'];?></td>
+						<td><?php echo number_format($row['amount'], 2) ?></td>
 						<td><?php echo $row['cashier'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -1139,7 +1110,7 @@
 						<td><?php echo $row['name'];?></td>
 						<td><?php echo $row['invoice_no'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo $row['amount'];?></td>
+						<td><?php echo number_format($row['amount'], 2) ?></td>
 						<td><?php echo $row['received_by'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -1258,27 +1229,27 @@
 					<tbody>
 						<tr>
 							<td><h6>Cash Transaction (CA)</h6></td>
-							<td><?php// summary('cash_trans'); ?></td>
+							<td><?php summary('cash_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Depslip Transaction (DPSLP)</h6></td>
-							<td><?php// summary('depslip_trans'); ?></td>
+							<td><?php summary('depslip_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Check Transaction (CK)</h6></td>
-							<td><?php// summary('check_trans'); ?></td>
+							<td><?php summary('check_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Credit Card Transaction (CC)</h6></td>
-							<td><?php// summary('credit_trans'); ?></td>
+							<td><?php summary('credit_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Provisional Receipt (PR)</h6></td>
-							<td><?php// summary('pr_trans'); ?></td>
+							<td><?php summary('pr_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>Send Bill</h6></td>
-							<td><?php// summary('bill_trans'); ?></td>
+							<td><?php summary('bill_trans'); ?></td>
 						</tr>
 						<tr>
 							<td><h6>TOTAL TRANSACTIONS</h6></td>
@@ -1295,6 +1266,7 @@
 			</div>
 
 		</div>
+	</div>
 	</div>
   </body>
 </html>

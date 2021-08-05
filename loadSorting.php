@@ -1,15 +1,14 @@
 <?php
+    date_default_timezone_set('Asia/Manila');	
+    $sel_date = date("Y-m-d");
+
     $sortWay = $_POST['kind'];
 
     if ($sortWay == "daily") {
-        echo "Date: <input type='text' id='datepicker1'>"; 
-    } 
-    elseif ($sortWay == "weeklyDef") {
-        echo "From: ", '<input type="date" value="<?php echo $sel_date; ?>" id="date_begin">';
-        echo "To: ", '<input type="date" id="date_end" disabled>';
+        echo "Date: <input type='text' id='datepicker'>"; 
     } 
     else {
-        echo "From: ", '<input type="date" value="<?php echo $sel_date; ?>" id="date_begin">';
+        echo "From: ", '<input type="date" value=', $sel_date, ' id="date_begin" onchange="date_begin_change();">';
         echo "To: ", '<input type="date" id="date_end">';
-    }
+    } 
 ?>
