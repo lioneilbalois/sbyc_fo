@@ -1,18 +1,6 @@
+<!-- load for content weekly -->
 <?php 
-	date_default_timezone_set('Asia/Manila');	
-	$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-	$sel_date = date("Y-m-d");
-	
-	// to sum amounts per table @ bottom of the page
-	function summary($table){
-		$getDate = $GLOBALS['sel_date'];
-		$sum_q = "SELECT SUM(`amount`) FROM `$table` WHERE `date_recorded` = '$getDate';"; 
-		$do_q = mysqli_query($GLOBALS['conn'], $sum_q);
-		
-		$summ_row = mysqli_fetch_array($do_q);
-		if ($summ_row['0'] == NULL) echo "-"; // the query returns NULL if no entry on `amount` to sum
-		else echo number_format($summ_row['0'], 2);
-	}
+	include("../php/functions.php");
 ?>
 
 <!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE--><!--FIRST TABLE-->
@@ -82,7 +70,7 @@
 					
 					<tr>
 				</thead>
-				<tbody id="tbody_cash">
+				<tbody id="table_cash">
 				
 				<?php 
 					$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
@@ -99,7 +87,12 @@
 						<td><?php echo $row['pr_num'];?></td>
 						<td><?php echo $row['or_num'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo number_format($row['amount'], 2) ?></td>
+						<td> 
+							<?php 
+								if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+								else echo $row['amount'];
+							?>
+						</td>
 						<td><?php echo $row['cashier'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -276,7 +269,7 @@
 					
 					<tr>
 				</thead>
-				<tbody>
+				<tbody id="table_dp">
 				<?php 
 					$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 					$sql  = "SELECT * FROM `depslip_trans` WHERE `date_recorded` = '$sel_date'";
@@ -291,7 +284,12 @@
 						<td><?php echo $row['pr_num'];?></td>
 						<td><?php echo $row['or_num'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo number_format($row['amount'], 2) ?></td>
+						<td> 
+							<?php 
+								if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+								else echo $row['amount'];
+							?>
+						</td>
 						<td><?php echo $row['cashier'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -465,7 +463,7 @@
 					
 					<tr>
 				</thead>
-				<tbody>
+				<tbody id="table_ck">
 				<?php 
 					$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 					$sql  = "SELECT * FROM `check_trans` WHERE `date_recorded` = '$sel_date'";
@@ -481,7 +479,12 @@
 						<td><?php echo $row['pr_num'];?></td>
 						<td><?php echo $row['or_num'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo number_format($row['amount'], 2) ?></td>
+						<td> 
+							<?php 
+								if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+								else echo $row['amount'];
+							?>
+						</td>
 						<td><?php echo $row['cashier'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -657,7 +660,7 @@
 				
 				<tr>
 			</thead>
-			<tbody>
+			<tbody id="table_cc">
 			<?php 
 				$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 				$sql  = "SELECT * FROM `credit_trans` WHERE `date_recorded` = '$sel_date'";
@@ -673,7 +676,12 @@
 					<td><?php echo $row['pr_num'];?></td>
 					<td><?php echo $row['or_num'];?></td>
 					<td><?php echo $row['particular'];?></td>
-					<td><?php echo number_format($row['amount'], 2) ?></td>
+					<td> 
+						<?php 
+							if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+							else echo $row['amount'];
+						?>
+					</td>
 					<td><?php echo $row['cashier'];?></td>
 					<td><?php echo $row['remarks'];?></td>
 					<td><?php echo $row['date'];?></td>
@@ -849,7 +857,7 @@
 				
 				<tr>
 			</thead>
-			<tbody>
+			<tbody id="table_pr">
 			<?php 
 				$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
 				$sql  = "SELECT * FROM `pr_trans` WHERE `date_recorded` = '$sel_date'";
@@ -865,7 +873,12 @@
 					<td><?php echo $row['pr_num'];?></td>
 					<td><?php echo $row['or_num'];?></td>
 					<td><?php echo $row['particular'];?></td>
-					<td><?php echo number_format($row['amount'], 2) ?></td>
+					<td> 
+						<?php 
+							if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+							else echo $row['amount'];
+						?>
+					</td>
 					<td><?php echo $row['cashier'];?></td>
 					<td><?php echo $row['remarks'];?></td>
 					<td><?php echo $row['date'];?></td>
@@ -1044,7 +1057,12 @@
 					<td><?php echo $row['name'];?></td>
 					<td><?php echo $row['invoice_no'];?></td>
 					<td><?php echo $row['particular'];?></td>
-					<td><?php echo number_format($row['amount'], 2) ?></td>
+					<td> 
+						<?php 
+							if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+							else echo $row['amount'];
+						?>
+					</td>
 					<td><?php echo $row['received_by'];?></td>
 					<td><?php echo $row['remarks'];?></td>
 					<td><?php echo $row['date'];?></td>
@@ -1156,7 +1174,7 @@
 						<th>Amount</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="table_summary">
 					<tr>
 						<td><h6>Cash Transaction (CA)</h6></td>
 						<td><?php summary('cash_trans'); ?></td>
@@ -1183,7 +1201,7 @@
 					</tr>
 					<tr>
 						<td><h6>TOTAL TRANSACTIONS</h6></td>
-						<td></td>
+						<td><?php sum_all(); ?></td>
 					</tr>
 				</tbody>
 			</table>

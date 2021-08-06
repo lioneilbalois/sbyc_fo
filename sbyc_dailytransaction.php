@@ -1,5 +1,5 @@
 <?php 
-	include 'php/functions.php';
+	include('php/functions.php');
 ?>
 
 <!doctype html>
@@ -171,7 +171,12 @@
 							<td><?php echo $row['pr_num'];?></td>
 							<td><?php echo $row['or_num'];?></td>
 							<td><?php echo $row['particular'];?></td>
-							<td><?php echo number_format($row['amount'], 2) ?></td>
+							<td> 
+								<?php 
+									if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+									else echo $row['amount'];
+								?>
+							</td>
 							<td><?php echo $row['cashier'];?></td>
 							<td><?php echo $row['remarks'];?></td>
 							<td><?php echo $row['date'];?></td>
@@ -361,7 +366,12 @@
 							<td><?php echo $row['pr_num'];?></td>
 							<td><?php echo $row['or_num'];?></td>
 							<td><?php echo $row['particular'];?></td>
-							<td><?php echo number_format($row['amount'], 2) ?></td>
+							<td> 
+								<?php 
+									if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+									else echo $row['amount'];
+								?>
+							</td>
 							<td><?php echo $row['cashier'];?></td>
 							<td><?php echo $row['remarks'];?></td>
 							<td><?php echo $row['date'];?></td>
@@ -550,7 +560,12 @@
 							<td><?php echo $row['pr_num'];?></td>
 							<td><?php echo $row['or_num'];?></td>
 							<td><?php echo $row['particular'];?></td>
-							<td><?php echo number_format($row['amount'], 2) ?></td>
+							<td> 
+								<?php 
+									if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+									else echo $row['amount'];
+								?>
+							</td>
 							<td><?php echo $row['cashier'];?></td>
 							<td><?php echo $row['remarks'];?></td>
 							<td><?php echo $row['date'];?></td>
@@ -741,7 +756,12 @@
 						<td><?php echo $row['pr_num'];?></td>
 						<td><?php echo $row['or_num'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo number_format($row['amount'], 2) ?></td>
+						<td> 
+							<?php 
+								if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+								else echo $row['amount'];
+							?>
+						</td>
 						<td><?php echo $row['cashier'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -932,7 +952,12 @@
 						<td><?php echo $row['pr_num'];?></td>
 						<td><?php echo $row['or_num'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo number_format($row['amount'], 2) ?></td>
+						<td> 
+							<?php 
+								if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+								else echo $row['amount'];
+							?>
+						</td>
 						<td><?php echo $row['cashier'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -1110,7 +1135,12 @@
 						<td><?php echo $row['name'];?></td>
 						<td><?php echo $row['invoice_no'];?></td>
 						<td><?php echo $row['particular'];?></td>
-						<td><?php echo number_format($row['amount'], 2) ?></td>
+						<td> 
+							<?php 
+								if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+								else echo $row['amount'];
+							?>
+						</td>
 						<td><?php echo $row['received_by'];?></td>
 						<td><?php echo $row['remarks'];?></td>
 						<td><?php echo $row['date'];?></td>
@@ -1226,7 +1256,7 @@
 							<th>Amount</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="table_summary">
 						<tr>
 							<td><h6>Cash Transaction (CA)</h6></td>
 							<td><?php summary('cash_trans'); ?></td>
@@ -1253,7 +1283,7 @@
 						</tr>
 						<tr>
 							<td><h6>TOTAL TRANSACTIONS</h6></td>
-							<td></td>
+							<td><?php sum_all(); ?></td>
 						</tr>
 					</tbody>
 				</table>

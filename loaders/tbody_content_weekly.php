@@ -1,12 +1,15 @@
+<!-- load for tbody per table of weekly -->
 
-<?php 
+<?php 	
 	$start_date = $_POST['start'];
 	$end_date = $_POST['end'];
+	$table_name = $_POST['table'];
 
 	$conn = new mysqli('localhost', 'root', '', 'sbyc_fo');
-	$sql  = "SELECT * FROM `cash_trans` WHERE `date_recorded` BETWEEN '$start_date' AND '$end_date'";
+	$sql  = "SELECT * FROM `$table_name` WHERE `date_recorded` BETWEEN '$start_date' AND '$end_date'";
 	$query = mysqli_query($conn, $sql);
 	//$row = mysqli_fetch_array($query);
+
 	$row = mysqli_num_rows($query);
 	if ($row > 0) {
 	  while($row = mysqli_fetch_assoc($query)) {
@@ -17,7 +20,12 @@
 		<td><?php echo $row['pr_num'];?></td>
 		<td><?php echo $row['or_num'];?></td>
 		<td><?php echo $row['particular'];?></td>
-		<td><?php echo $row['amount'];?></td>
+		<td> 
+			<?php 
+				if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+				else echo $row['amount'];
+			?>
+		</td>
 		<td><?php echo $row['cashier'];?></td>
 		<td><?php echo $row['remarks'];?></td>
 		<td><?php echo $row['date'];?></td>

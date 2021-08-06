@@ -1,3 +1,4 @@
+<<!-- load for tbody per table of daily -->
 <?php 
     $date = $_POST['datepicker'];
     $table_name = $_POST['table_sql'];
@@ -15,7 +16,12 @@
         <td><?php echo $row['pr_num'];?></td>
         <td><?php echo $row['or_num'];?></td>
         <td><?php echo $row['particular'];?></td>
-        <td><?php echo $row['amount'];?></td>
+        <td> 
+			<?php 
+				if(is_numeric($row['amount'])) echo number_format($row['amount'], 2);
+				else echo $row['amount'];
+			?>
+		</td>
         <td><?php echo $row['cashier'];?></td>
         <td><?php echo $row['remarks'];?></td>
         <td><?php echo $row['date'];?></td>

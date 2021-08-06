@@ -20,7 +20,7 @@
 		$query = mysqli_query($conn, $sql_cash);
 		
 		if($query){
-			header ('location: sbyc_dailytransaction.php?now=true');
+			header ('location: sbyc_dailytransaction.php');
 		}
 		
 		mysqli_close($conn);
@@ -50,7 +50,7 @@
 		$query = mysqli_query($conn, $sql_dp);
 		
 		if($query){
-			header ('location: sbyc_dailytransaction.php?now=true');
+			header ('location: sbyc_dailytransaction.php');
 		}
 		
 		mysqli_close($conn);
@@ -80,7 +80,7 @@
 		$query = mysqli_query($conn, $sql_ck);
 		
 		if($query){
-			header ('location: sbyc_dailytransaction.php?now=true');
+			header ('location: sbyc_dailytransaction.php');
 		}
 		
 		mysqli_close($conn);
@@ -110,7 +110,7 @@
 		$query = mysqli_query($conn, $sql_cc);
 		
 		if($query){
-			header ('location: sbyc_dailytransaction.php?now=true');
+			header ('location: sbyc_dailytransaction.php');
 		}
 		
 		mysqli_close($conn);
@@ -140,7 +140,7 @@
 		$query = mysqli_query($conn, $sql_pr);
 		
 		if($query){
-			header ('location: sbyc_dailytransaction.php?now=true');
+			header ('location: sbyc_dailytransaction.php');
 		}
 		
 		mysqli_close($conn);
