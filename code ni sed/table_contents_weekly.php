@@ -1,7 +1,11 @@
 <?php 
     date_default_timezone_set('Asia/Manila'); 
     $current_date = date("Y-m-d");
-    $selected_date = $_POST['daily_date'];
+
+    $date_begin = $_POST['weekly_begin'];
+    $date_end = $_POST['weekly_end'];
+
+
     $table = $_POST['table_sql'];
     $delete_modal = $_POST['delete_modal'];
     $edit_modal = $_POST['edit_modal'];
@@ -12,8 +16,8 @@
 
     $conn = new mysqli('localhost', 'root', '', 'sbyc_fo1');
 
-    $sql = "SELECT * FROM `$table` WHERE `date_recorded` = '$selected_date'";
-    $amount_sql = "SELECT SUM(`amount`) FROM `$table` WHERE `date_recorded` = '$selected_date'";
+    $sql = "SELECT * FROM `$table` WHERE `date_recorded` BETWEEN '$date_begin' AND '$date_end'";
+    $amount_sql = "SELECT SUM(`amount`) FROM `$table` WHERE `date_recorded` BETWEEN '$date_begin' AND '$date_end'";
 
     $query = mysqli_query($conn, $sql);
     $amount_query = mysqli_query($conn, $amount_sql);
@@ -36,7 +40,7 @@
     <td width=9%>
 
         <!-- Delete Data part -->
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#<?php echo $delete_modal, $row['id']; ?>" <?php if($current_date != $selected_date){ echo "disabled";}?>>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#<?php echo $delete_modal, $row['id']; ?>" disabled>
             Delete
         </button>
 
@@ -66,7 +70,7 @@
         <!-- Delete Data end part -->
 
         <!-- Edit Data part -->
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#<?php echo $edit_modal, $row['id']; ?>" <?php if($current_date != $selected_date){ echo "disabled";}?>>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#<?php echo $edit_modal, $row['id']; ?>" disabled>
             Edit
         </button>
 

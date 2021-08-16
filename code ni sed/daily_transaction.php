@@ -30,7 +30,6 @@
             const delete_entries = ["delete_cash", "delete_depslip", "delete_check", "delete_credit", "delete_pr"];
             const edit_entries = ["edit_cash", "edit_depslip", "edit_check", "edit_credit", "edit_pr"];
 
-
             $(document).ready(function(){
 
                 $("#daily").datepicker({
@@ -39,11 +38,53 @@
                     dateFormat: 'yy-mm-dd'
                 });
 
+                $("#date_begin").datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    dateFormat: 'yy-mm-dd'
+                });
+
+                $("#date_end").datepicker({
+                    changeYear: true,
+                    changeMonth: true,
+                    dateFormat: 'yy-mm-dd'
+                });
+
+                $("#search").on('click', function(){
+                    var date_begin = $("#date_begin").datepicker().val();
+                    var date_end = $("#date_end").datepicker().val();
+                    
+                    for(let i = 0; i < tables.length; i++){
+                        $(tables[i]).load("table_contents_weekly.php", {
+                            weekly_begin : date_begin,
+                            weekly_end : date_end,
+
+                            table_sql : tables_sql[i],
+                            delete_modal : delete_modals[i],
+                            edit_modal : edit_modals[i],
+                            delete_entry : delete_entries[i],
+                            edit_entry : edit_entries[i]
+                        });
+                    }
+
+                    $("#amount_summary").load("amount_summary_weekly.php", {
+                        weekly_begin : date_begin,
+                        weekly_end : date_end
+                    });
+
+                    $("#addButton_cash").load("addButton.php", {});
+                    $("#addButton_depslip").load("addButton.php", {});
+                    $("#addButton_credit").load("addButton.php", {});
+                    $("#addButton_check").load("addButton.php", {});
+                    $("#addButton_pr").load("addButton.php", {});
+
+                });
+
                 $("#daily").on('change', function() {
                     var selected_date = $(this).datepicker().val();
                     
                     for(let i = 0; i < tables.length; i++){
-                        $(tables[i]).load("table_contents.php", {
+                        $(tables[i]).load("table_contents_daily.php", {
                             daily_date : selected_date,
                             table_sql : tables_sql[i],
                             delete_modal : delete_modals[i],
@@ -53,11 +94,18 @@
                         });
                     }
 
-                    $("#amount_summary").load("amount_summary.php", {
+                    $("#amount_summary").load("amount_summary_daily.php", {
                         daily_date : selected_date,
                     });
+
+                    $("#addButton_cash").load("addButton.php", {});
+                    $("#addButton_depslip").load("addButton.php", {});
+                    $("#addButton_credit").load("addButton.php", {});
+                    $("#addButton_check").load("addButton.php", {});
+                    $("#addButton_pr").load("addButton.php", {});
                 });
             });  
+
         </script>
 
     </head>
@@ -83,22 +131,37 @@
                 </li>
                 </ul>
             </div>
-        </nav>
-        
-        <br> <input type="text" name="daily" id="daily" style="float: right;" readonly> <br> <br>
+        </nav> <br>
 
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Date: &nbsp;</h4> <input type="text" name="daily" id="daily" readonly class="form-control" value="<?php echo $current_date ?>"> <br> 
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-2">
+                <h4>From: &nbsp;</h4> <input type="text" name="date_begin" id="date_begin" readonly class="form-control" value="<?php echo $current_date ?>"> <br> 
+            </div>
+            <div class="col-md-2">
+                <h4>To: &nbsp;</h4> <input type="text" name="date_end" id="date_end" readonly class="form-control" value="YY-MM-DD"> <br> 
+            </div>
+            <div class="col-md-1">
+                <br> <button id="search" name="search" class="btn btn-info form-control">Search</button>
+            </div>
+        </div>
+       
         <!--CASH TRANSACTION TABLE-->
         <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-md-12">
                 <!-- add entry part -->
-                <h2 style="margin-bottom:0%; margin-top:0%;">
-                    CASH TRANSACTION
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cash_Modal" style="float:right;">
-                        Add Entry
-                    </button>
-                </h2>
-
+                    <h2 style="margin-bottom:0%; margin-top:0%;">
+                        CASH TRANSACTION
+                        <div id="addButton_cash">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cash_Modal" style="float:right; margin-bottom:7px;" id="addButton">
+                                Add Entry
+                            </button>
+                        </div>
+                    </h2>
                     <div class="modal fade" id="cash_Modal">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -311,9 +374,11 @@
                 <h2 style="margin-bottom:0%; margin-top:0%;">
                     DEPSLIP TRANSACTION
                     <!-- add entry part -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#depslip_Modal" style="float:right;">
-                        Add Entry
-                    </button>
+                    <div id="addButton_depslip">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#depslip_Modal" style="float:right; margin-bottom:7px;">
+                            Add Entry
+                        </button>
+                    </div>
                 </h2>
 
                     <div class="modal fade" id="depslip_Modal">
@@ -524,9 +589,11 @@
                 <h2 style="margin-bottom:0%; margin-top:0%;">
                     CHECK TRANSACTION
                     <!-- add entry part -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check_Modal" style="float:right;">
-                        Add Entry
-                    </button>
+                    <div id="addButton_check">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check_Modal" style="float:right; margin-bottom:7px;">
+                            Add Entry
+                        </button>
+                    </div>
                 </h2>
 
                     <div class="modal fade" id="check_Modal">
@@ -739,9 +806,11 @@
                 <h2 style="margin-bottom:0%; margin-top:0%;">
                     CREDIT TRANSACTION
                     <!-- add entry part -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#credit_Modal" style="float:right;">
-                        Add Entry
-                    </button>
+                    <div id="addButton_credit">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#credit_Modal" style="float:right; margin-bottom:7px;">
+                            Add Entry
+                        </button>
+                    </div>
                 </h2>
 
                     <div class="modal fade" id="credit_Modal">
@@ -954,9 +1023,11 @@
                 <h2 style="margin-bottom:0%; margin-top:0%;">
                     PR TRANSACTION
                     <!-- add entry part -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pr_Modal" style="float:right;">
-                        Add Entry
-                    </button>
+                    <div id="addButton_pr">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pr_Modal" style="float:right; margin-bottom:7px;">
+                            Add Entry
+                        </button>
+                    </div>
                 </h2>
 
                     <div class="modal fade" id="pr_Modal">
